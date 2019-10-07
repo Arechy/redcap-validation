@@ -3,7 +3,6 @@ from datetime import datetime
 
 def format_missing(row, date_missing=datetime.strptime('1915-01-01', '%Y-%m-%d')):
         new_row = {}
-        # for row in data:
         for variable, value in row.items():
             if value is None:
                 new_row[variable] = None

@@ -17,4 +17,4 @@ class Project:
 
 
 
-cin = Project(url = "https://hsuweb.kemri-wellcome.org/redcap/api/", id_var = 'id', date_var = 'date_today', token = tokens['cin_token'], project = 'cin')
+

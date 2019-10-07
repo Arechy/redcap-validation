@@ -2,8 +2,6 @@ import requests
 import json
 import pandas as pd
 from datetime import datetime
-from settings import Project
-import os
 
 
 # gets data from redcap
@@ -76,65 +74,11 @@ def get_data(project, start=None, stop=None,variables=None):
     request = requests. post(project.url, data=data, verify=False)
     data = json.loads(request.text)
 
-    # for u in data:
-    #     u.pop("biodata_complete")
-    #     u.pop("history_complete")
-    #     u.pop("immunization_history_complete")
-    #     u.pop("examination_complete")
-    #     u.pop("investigations_complete")
-    #     u.pop("admission_diagnosis_complete")
-    #     u.pop("treatment_complete")
-    #     u.pop("supportive_care_complete")
-    #     u.pop("monitoring_complete")
-    #     u.pop("discharge_information_complete")
+
     return data
 
 
-# trial_data = get_data(project=rtss,variables=['ipno','date_today'])
-
-# class Data:
-#     def __init__(self, data):
-#         self.data = data
-#         self.records = {v['record_id']:v for v in self.data}
-#
-#     def exists(self, record):
-#         result = record in self.records.keys()
-#         return result
-#
-#     def get_id(self, record):
-#         if not self.exists(record):
-#             raise Exception("Variable {} does not exist".format(record))
-#         label =self.records[record]['record_id']
-#         return label
-#
-#     def get_valid_date_range(self, record):
-#         if not self.exists(record):
-#             raise Exception("Variable {} does not exist".format(record))
-#         date1 = self.records[record]['date_adm']
-#         today_date = self.records[record]['date_today']
-#         date1 = None if min == '' else datetime.strptime(date1,'%Y-%m-%d').date()
-#         today_date = None if max == '' else datetime.strptime(today_date,'%Y-%m-%d').date()
-#         range = None
-#         if (date1 is not None) | (today_date is not None): range = (date1, today_date)
-#
-#         return range
-
-# def check_dates(row,date1,date2,dates_before_adm,dates_after_adm,dates_before_,date_missing="2000-01-01"):
-
-    # checks date adm<other dates
-    # :param row:
-    # :return:
-
-    # errors=[]
-
-# check_dates(row,"date_adm","date_dsc",["date_pres1","date_pres2"],["date_pres1","date_pres2"])
-#
-# self1=Data(get_data(rtss))
-# o=self1.get_valid_date_range('7600306')
-# #print(data2[[]])
-
 # gets metadata from redcap
-
 
 def get_metadata(project):
     """
@@ -180,9 +124,6 @@ class Metadata:
             else:
                 self.vars_expanded.append(v['field_name'])
                 self.metadata_expanded[v['field_name']] = v
-
-            # self.variables={v['field_name']: v for v in self.metadata}
-            # self.vars_non_expanded=list(self.variables.keys())
 
 
     def exists(self, variable):
@@ -329,10 +270,8 @@ class Metadata:
         else:
             return False
 
-    def format_data(self, row=None, labels=False):
-        # for key, value in row.items():
-        #     if not self.exists(key):
-        #         raise Exception("Variable {} does not exist".format(key))
+    def format_data(self, row=None):
+
         """
                :param variable: row
                :return: a row whose values have been converted to their respective types
@@ -356,42 +295,5 @@ class Metadata:
 
 
 
-
-
-
-
-        # formatted_data = row[variable]
-        # if self.get_type(variable) is not None:
-        #     if row[variable] == '':
-        #         formatted_data = None
-        #     else:
-        #         formatted_data = row[variable]
-        #     if self.get_type(variable) == "integer":
-        #         if formatted_data is not None:
-        #             formatted_data = int(row[variable])
-        #             # formatted_data2 = [s for s in formatted_data if s is not None]
-        #     if self.get_type(variable) == "date_ymd":
-        #         if formatted_data is not None:
-        #             formatted_data = datetime.strptime(row[variable], '%Y-%m-%d')
-        #             # formatted_data2 = [s for s in formatted_data if s is not None]
-        #     if self.get_type(variable) == "number":
-        #         if formatted_data is not None:
-        #             formatted_data = float(row[variable])
-        #             # formatted_data2 = [s for s in formatted_data if s is not None]
-        # return formatted_data
-
-
-
-
-if __name__=='__main__':
-    self = Metadata(get_metadata(rtss))
-    self.get_label('id')
-    self.get_valid_range('w_cell_count')
-    self.get_is_required('w_cell_count')
-    self.get_branching_logic('random')
-    self.get_choices('subcounty_county')
-    self.get_valid_range('w_cell_count')
-    [self.get_hidden(f) for f in self.get_variables(expand_checkbox=True)]
-    [self.format_data(r,'age_days')for r in trial_data]
 
 
